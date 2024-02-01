@@ -22,7 +22,7 @@ export class CreateProductUseCase {
 
     async execute(product: ICreateProductRequest){
 
-        const productExists = await this.productRepository.findProductByTitle(product.title);
+        const productExists = await this.productRepository.findProductsByTitle(product.title);
 
         if( productExists ){
 
