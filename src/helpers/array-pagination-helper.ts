@@ -3,7 +3,11 @@ interface IItems {
     [key: string]: any
 }
 
-export function arrayPagination(items: IItems,itemsPerPage: number = 10){
+export function arrayPagination<T>(items: T [],itemsPerPage: number = 10): T[][]{
+
+    itemsPerPage = (
+        itemsPerPage === 0 ? 1 : itemsPerPage
+    );
 
     const pages = Math.ceil( items.length / itemsPerPage );
 
