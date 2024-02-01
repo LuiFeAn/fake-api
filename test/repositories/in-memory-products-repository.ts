@@ -61,13 +61,14 @@ export class InMemoryProductsRepository implements AbstractProductRepository {
 
         if( title ){
 
-            products = await this.findProductsByTitle(title);
+            products = arrayPagination(await this.findProductsByTitle(title))[page];
 
         }   
 
         if( !title ){
+            
 
-            products = arrayPagination(this.products,quanty);
+            products = arrayPagination(this.products,quanty)[page];
 
         }
 
