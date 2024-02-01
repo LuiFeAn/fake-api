@@ -1,7 +1,7 @@
 import { IPagnation } from "src/application/common/interfaces/pagination";
 import { Product } from "../../src/application/entities/product/product";
 import { AbstractProductRepository, IFindManyCountOptions } from "src/application/repositories/interfaces/product-repository";
-import { arrayPagination } from "src/helpers/array-pagination-helper";
+import { arrayPagination } from "../../src/helpers/array-pagination-helper";
 
 export class InMemoryProductsRepository implements AbstractProductRepository {
 
@@ -61,7 +61,7 @@ export class InMemoryProductsRepository implements AbstractProductRepository {
 
         if( title ){
 
-            products = this.findProductsByTitle(title);
+            products = await this.findProductsByTitle(title);
 
         }   
 
@@ -70,6 +70,8 @@ export class InMemoryProductsRepository implements AbstractProductRepository {
             products = arrayPagination(this.products,quanty);
 
         }
+
+        return products;
 
 
    }
