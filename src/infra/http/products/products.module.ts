@@ -1,13 +1,13 @@
 import { Module } from "@nestjs/common";
 import { ProductsController } from "./products.controller";
-import { CreateProductUseCase } from "src/application/use_cases/product/create-product-use-case";
-import { FindManyProductsUseCase } from "src/application/use_cases/product/find-many-product-use-case";
+import { NestJsCreateProductUseCase } from "src/infra/use_cases/create-product-use-case";
+import { NestJsFindManyProdutsUseCase } from "src/infra/use_cases/find-many-products-use-case";
 
 @Module({
     controllers:[ProductsController],
     providers:[
-        CreateProductUseCase,
-        FindManyProductsUseCase,
+        NestJsCreateProductUseCase,
+        NestJsFindManyProdutsUseCase,
     ]
 })
 export class ProductsModule{}

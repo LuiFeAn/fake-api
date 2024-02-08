@@ -1,10 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import { Description } from "src/application/entities/product/object_values/description";
-import { Title } from "src/application/entities/product/object_values/title";
-import { Value } from "src/application/entities/product/object_values/value";
-import { Product } from "src/application/entities/product/product";
 import { AbstractProductRepository } from "src/application/repositories/interfaces/product-repository";
 import { ProductAlreadyExists } from "./errors/product-already-exits";
+import { productFactory } from "src/application/factories/product";
 
 export interface ICreateProductRequest {
     
@@ -13,7 +9,6 @@ export interface ICreateProductRequest {
     value: number
 }
 
-@Injectable()
 export class CreateProductUseCase {
 
     constructor(
@@ -29,11 +24,11 @@ export class CreateProductUseCase {
             throw new ProductAlreadyExists();
         }
 
-        const productInstance = new Product({
-            title: new Title(product.title),
-            description: new Description(product.description),
-            value: new Value(product.value)
-        });;
+        const productInstance = productFactory({
+            title: product.title,
+            description: product.description,
+            value: product.value
+        })
 
         await this.productRepository.create(productInstance);
 

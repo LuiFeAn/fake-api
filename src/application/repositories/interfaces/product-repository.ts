@@ -1,5 +1,5 @@
-import { IProduct } from "src/application/entities/product/interfaces/product";
-import { Product } from "src/application/entities/product/product";
+import { IProduct } from "src/domain/entities/product/interfaces/product";
+import { Product } from "src/domain/entities/product/product";
 import { IPagnation } from "src/application/common/interfaces/pagination";
 
 export interface  IUpdateProductProps extends IProduct{}

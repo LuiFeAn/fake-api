@@ -1,5 +1,5 @@
 import { IPagnation } from "src/application/common/interfaces/pagination";
-import { Product } from "../../src/application/entities/product/product";
+import { Product } from "../../src/domain/entities/product/product";
 import { AbstractProductRepository, IFindManyCountOptions } from "src/application/repositories/interfaces/product-repository";
 import { arrayPagination } from "../../src/helpers/array-pagination-helper";
 

@@ -1,17 +1,17 @@
-import { Body, ConflictException, Controller, Delete, Post, Get, Param, Query, UnauthorizedException } from "@nestjs/common";
-import { CreateProductUseCase } from "src/application/use_cases/product/create-product-use-case";
+import { Body, ConflictException, Controller, Delete, Post, Get, Query, UnauthorizedException } from "@nestjs/common";
 import { CreateProductDto } from "./dtos/create-product.dto";
 import { productToHttp } from "./mapper/to-http";
 import { ProductAlreadyExists } from "src/application/use_cases/product/errors/product-already-exits";
-import { FindManyProductsUseCase } from "src/application/use_cases/product/find-many-product-use-case";
 import { FindManyProductsDto } from "./dtos/find-many-products.dto";
 import { NoProducts } from "src/application/use_cases/product/errors/no-products";
+import { NestJsCreateProductUseCase } from "src/infra/use_cases/create-product-use-case";
+import { NestJsFindManyProdutsUseCase } from "src/infra/use_cases/find-many-products-use-case";
 @Controller("products")
 export class ProductsController {
 
     constructor(
-        private readonly createProduct: CreateProductUseCase,
-        private readonly findManyProducts: FindManyProductsUseCase,
+        private readonly createProduct: NestJsCreateProductUseCase,
+        private readonly findManyProducts: NestJsFindManyProdutsUseCase,
     ){}
 
 
