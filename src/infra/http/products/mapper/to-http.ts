@@ -1,4 +1,4 @@
-import { Product } from "src/application/entities/product/product";
+import { Product } from "src/domain/entities/product/product";
 
 export function productToHttp(product: Product){
 
