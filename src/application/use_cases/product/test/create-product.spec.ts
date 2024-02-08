@@ -1,6 +1,6 @@
 import { InMemoryProductsRepository } from "test/repositories/in-memory-products-repository";
 import inMemoryProductsRepository from "../../../../../test/factories/in-memory-product-repository";
-import { productFactory } from "../../../factories/product";
+import { productFactory } from "../../../../domain/factories/product";
 
 describe("Testes de criação de produto", () => {
 

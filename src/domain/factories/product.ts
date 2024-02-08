@@ -1,7 +1,7 @@
-import { Product } from "../../../src/domain/entities/product/product";
-import { Title } from "../../../src/domain/entities/product/object_values/title";
-import { Description } from "../../../src/domain/entities/product/object_values/description";
-import { Value } from "../../../src/domain/entities/product/object_values/value";
+import { Product } from "../entities/product/product";
+import { Title } from "../entities/product/object_values/title";
+import { Description } from "../entities/product/object_values/description";
+import { Value } from "../entities/product/object_values/value";
 interface IProductFactory {
     title: string
     description: string;

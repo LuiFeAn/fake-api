@@ -1,6 +1,6 @@
 import { AbstractProductRepository } from "src/application/repositories/interfaces/product-repository";
 import { ProductAlreadyExists } from "./errors/product-already-exits";
-import { productFactory } from "src/application/factories/product";
+import { productFactory } from "src/domain/factories/product";
 
 export interface ICreateProductRequest {
     
