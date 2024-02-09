@@ -2,10 +2,15 @@ import { IPagnation } from "src/application/common/interfaces/pagination";
 import { Product } from "../../src/domain/entities/product/product";
 import { AbstractProductRepository, IFindManyCountOptions } from "src/application/repositories/interfaces/product-repository";
 import { arrayPagination } from "../../src/helpers/array-pagination-helper";
+import { productFactory } from "src/domain/factories/product";
 
 export class InMemoryProductsRepository implements AbstractProductRepository {
 
-    public products: Product [] = []
+    public products: Product [] = [productFactory({
+        title:"Fake Product",
+        description:"Fake description",
+        value:200
+    })]
 
     async create(product: Product): Promise<void> {
 
@@ -57,22 +62,7 @@ export class InMemoryProductsRepository implements AbstractProductRepository {
     title
    }: IFindManyCountOptions & IPagnation): Promise<Product[]> {
 
-        let products: Product [];
-
-        if( title ){
-
-            products = arrayPagination(await this.findProductsByTitle(title))[page];
-
-        }   
-
-        if( !title ){
-            
-
-            products = arrayPagination(this.products,quanty)[page];
-
-        }
-
-        return products;
+       return this.products
 
 
    }

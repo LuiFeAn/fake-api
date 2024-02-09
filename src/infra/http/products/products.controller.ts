@@ -1,17 +1,19 @@
 import { Body, ConflictException, Controller, Delete, Post, Get, Query, UnauthorizedException } from "@nestjs/common";
 import { CreateProductDto } from "./dtos/create-product.dto";
-import { productToHttp } from "./mapper/to-http";
+import { ProductToHttp } from "./mapper/to-http";
 import { ProductAlreadyExists } from "src/application/use_cases/product/errors/product-already-exits";
 import { FindManyProductsDto } from "./dtos/find-many-products.dto";
 import { NoProducts } from "src/application/use_cases/product/errors/no-products";
-import { NestJsCreateProductUseCase } from "src/infra/use_cases/create-product-use-case";
-import { NestJsFindManyProdutsUseCase } from "src/infra/use_cases/find-many-products-use-case";
+import { ProductsGateWay } from "src/infra/gateways/products/products.gateway";
+import { CreateProductUseCase } from "src/application/use_cases/product/create-product-use-case";
+import { FindManyProductsUseCase } from "src/application/use_cases/product/find-many-product-use-case";
 @Controller("products")
 export class ProductsController {
 
     constructor(
-        private readonly createProduct: NestJsCreateProductUseCase,
-        private readonly findManyProducts: NestJsFindManyProdutsUseCase,
+        private readonly createProduct: CreateProductUseCase,
+        private readonly findManyProducts: FindManyProductsUseCase,
+        private readonly productGateway: ProductsGateWay,
     ){}
 
 
@@ -22,7 +24,7 @@ export class ProductsController {
 
             const result = await this.findManyProducts.execute(params);
 
-            const mappedHttProducts = result.products.map(productToHttp);
+            const mappedHttProducts = ProductToHttp.many(result.products)
 
             return {
                 ...result,
@@ -50,10 +52,13 @@ export class ProductsController {
 
             const product = await this.createProduct.execute(createProductDto);
 
-            return productToHttp(product);
+            this.productGateway.server.emit("new-product");
+
+            return ProductToHttp.one(product);
 
        }catch(err){
-        
+
+            console.log(err)
 
             if( err instanceof ProductAlreadyExists ){
 

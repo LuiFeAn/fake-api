@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
 import { ProductsGateWay } from "./products.gateway";
-import { NestJsFindManyProdutsUseCase } from "src/infra/use_cases/find-many-products-use-case";
+import { FindManyProductsUseCase } from "src/application/use_cases/product/find-many-product-use-case";
 
 @Module({
     imports:[],
     providers:[
-        NestJsFindManyProdutsUseCase,
+        FindManyProductsUseCase,
         ProductsGateWay
     ]
 })

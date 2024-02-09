@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { MessageBody, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer, OnGatewayConnection } from "@nestjs/websockets";
+import { OnGatewayInit, WebSocketGateway, WebSocketServer, OnGatewayConnection } from "@nestjs/websockets";
 import { Server } from "socket.io";
-import { NestJsFindManyProdutsUseCase } from "src/infra/use_cases/find-many-products-use-case";
+import { ProductToWs } from "./mapper/to-ws";
+import { FindManyProductsUseCase } from "src/application/use_cases/product/find-many-product-use-case";
 @Injectable()
 @WebSocketGateway(3003,{
     cors:true
@@ -13,19 +14,21 @@ OnGatewayConnection {
     @WebSocketServer() server: Server
 
     constructor(
-        private readonly findManyProductsUseCase: NestJsFindManyProdutsUseCase
+        private readonly findManyProductsUseCase: FindManyProductsUseCase
     ){}
 
     afterInit(server: Server) {
 
     }
 
-    handleConnection(client: Server, ...args: any[]) {
+    async handleConnection(client: Server, ...args: any[]) {
 
-        client.emit("welcome",this.findManyProductsUseCase.execute({
+        const products = await this.findManyProductsUseCase.execute({
             page:1,
-            quanty:10,
-        }));
+            quanty:10
+        });
+
+        client.emit("send-products",ProductToWs.many(products.products));
 
     }
 
