@@ -1,32 +1,24 @@
+export function arrayPagination<T>(
+  items: T[],
+  itemsPerPage: number = 10,
+): T[][] {
+  itemsPerPage = itemsPerPage === 0 ? 1 : itemsPerPage;
 
-interface IItems {
-    [key: string]: any
-}
+  const pages = Math.ceil(items.length / itemsPerPage);
 
-export function arrayPagination<T>(items: T [],itemsPerPage: number = 10): T[][]{
+  const pagination = [];
 
-    itemsPerPage = (
-        itemsPerPage === 0 ? 1 : itemsPerPage
-    );
+  let offsetInit = 0;
 
-    const pages = Math.ceil( items.length / itemsPerPage );
+  let offsetEnd = itemsPerPage;
 
-    const pagination = [];
+  for (let i = 0; i < pages; i++) {
+    pagination.push(items.slice(offsetInit, offsetEnd));
 
-    let offsetInit = 0; 
-    
-    let offsetEnd = itemsPerPage;
+    offsetInit += itemsPerPage;
 
-    for(let i = 0; i < pages; i++){
+    offsetEnd += itemsPerPage;
+  }
 
-        pagination.push(items.slice(offsetInit,offsetEnd));
-
-        offsetInit += itemsPerPage; 
-        
-        offsetEnd += itemsPerPage;
-
-    }
-
-    return pagination
-
+  return pagination;
 }
