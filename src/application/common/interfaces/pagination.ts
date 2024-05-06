@@ -1,6 +1,4 @@
 export interface IPagnation {
-
-    page: number
-    quanty: number
-
+  page: number;
+  quanty: number;
 }

@@ -8,6 +8,9 @@ import {
 import { Server } from 'socket.io';
 import { ProductToWs } from './mapper/to-ws';
 import { FindManyProductsUseCase } from 'src/application/use_cases/product/find-many-product-use-case';
+import { Inject } from '@nestjs/common';
+import { UseCasesProxyModule } from 'src/infra/use_cases/proxy.module';
+
 @Injectable()
 @WebSocketGateway(3003, {
   cors: true,
@@ -16,13 +19,14 @@ export class ProductsGateWay implements OnGatewayInit, OnGatewayConnection {
   @WebSocketServer() server: Server;
 
   constructor(
-    private readonly findManyProductsUseCase: FindManyProductsUseCase,
+    @Inject(UseCasesProxyModule.FIND_PRODUCT_USECASE_PROXY)
+    private readonly findManyProducts: FindManyProductsUseCase,
   ) {}
 
   afterInit(server: Server) {}
 
   async handleConnection(client: Server, ...args: any[]) {
-    const products = await this.findManyProductsUseCase.execute({
+    const products = await this.findManyProducts.execute({
       page: 1,
       quanty: 10,
     });

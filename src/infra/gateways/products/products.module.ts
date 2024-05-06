@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
+import { ProductsController } from 'src/infra/http/products/products.controller';
 import { ProductsGateWay } from './products.gateway';
-import { FindManyProductsUseCase } from 'src/application/use_cases/product/find-many-product-use-case';
 
 @Module({
   imports: [],
-  providers: [FindManyProductsUseCase, ProductsGateWay],
+  controllers: [ProductsController],
+  providers: [ProductsGateWay],
+  exports: [ProductsGateWay],
 })
 export class ProductsGateWayModule {}

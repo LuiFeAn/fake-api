@@ -4,16 +4,9 @@ import {
   AbstractProductRepository,
   IFindManyCountOptions,
 } from 'src/application/repositories/interfaces/product-repository';
-import { productFactory } from '../../src/domain/factories/product';
 
 export class InMemoryProductsRepository implements AbstractProductRepository {
-  public products: Product[] = [
-    productFactory({
-      title: 'Fake Product',
-      description: 'Fake description',
-      value: 200,
-    }),
-  ];
+  public products: Product[] = [];
 
   async create(product: Product): Promise<void> {
     this.products.push(product);

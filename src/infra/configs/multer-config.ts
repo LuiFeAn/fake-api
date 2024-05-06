@@ -6,11 +6,10 @@ export default function multer(destination: string) {
     storage: diskStorage({
       destination: `uploads/${destination}`,
       filename: (req, file, cb) => {
-        const { hostname, protocol } = req;
-
+        console.log(file)
         cb(
           null,
-          `${protocol}://${hostname}:${process.env.SERVER_PORT}/pics/${Date.now()}-${file.originalname.trim()}`,
+          `${Date.now()}-${file.originalname.trim()}`,
         );
       },
     }),
