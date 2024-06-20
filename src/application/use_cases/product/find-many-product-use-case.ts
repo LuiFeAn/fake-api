@@ -1,7 +1,6 @@
 import { AbstractProductRepository } from 'src/application/repositories/interfaces/product-repository';
 import { IFindManyProductsRequest } from './interfaces/find-many-products-request';
 import { pagination } from 'src/helpers/pagination-helper';
-import { NoProducts } from './errors/no-products';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -12,10 +11,6 @@ export class FindManyProductsUseCase {
     const productsCount = await this.productRepository.findManyCount({
       title,
     });
-
-    if (!productsCount) {
-      throw new NoProducts();
-    }
 
     const { currentPage, currentQuanty, total } = pagination({
       page,
